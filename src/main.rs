@@ -1,6 +1,7 @@
-mod evaluator;
+mod lexer;
 
 fn main () {
-    let input = "d#ce";
-    println!("{}", evaluator::notes_to_value(input));
+    let input = "g g c#";
+    let tokens = lexer::tokenize(input);
+    println!("Tokens: {:?}", tokens);
 }

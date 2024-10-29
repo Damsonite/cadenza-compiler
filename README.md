@@ -1,39 +1,40 @@
-# 🎶 Cadenza Compiler 🎵
+# Cadenza Compiler
 
-This project is a **musical note compiler** that transforms arithmetic expressions using notes from the staff. Imagine blending music and math: that's what we do here!
+This project is a **musical note compiler** that transforms arithmetic expressions using notes from the staff.
 
-## 🌟 Features
+## ⭐ Features
 
-- **Lexical, Syntactic, and Semantic Analysis**: Your musical input gets broken down and analyzed with precision.
+- **Lexical, Syntactic, and Semantic Analysis**: Your musical input gets broken down and analyzed.
 - **Musical Notes**: Work with notes that convert into numbers in base 12.
-- **Arithmetic Operations**: Addition, subtraction, multiplication, and division... with a musical twist!
+- **Arithmetic Operations**: Addition, subtraction, multiplication, and division.
 
 ## 🎼 Musical Notes
 
 We use the following notes in our system (in base 12):
 
-- **Notes**: c, c#, d, d#, e, f, f#, g, g#, a, a#, b
+- **Notes**: C, C#, D, D#, D, F, F#, G, G#, G, A#, A
 
 ### Example Conversion
 
-- **`c#`**: Note "C sharp"
-- **`c#c`**: That’s 12! 🎉
+- **`C#`**: Note "C sharp" equivalent to 1
+- **`D`**: Note "C" equivalent to 2
+- **`C#C`**: That’s 12! 🎉
 
 ## ➕ Arithmetic Operations
 
-The compiler can perform the following arithmetic operations in our musical style:
+The compiler can perform the following arithmetic operations following the syntax `operator value1 value2`:
 
-- **Addition**: `value1 a value2`  
-  _(Example: `c#c a c#` -> `12 + 1`)_
+- **Addition**: `a value1 value2`  
+  (Example: `a c#c c#` -> `12 + 1`)
 
-- **Subtraction**: `value1 g value2`  
-  _(Example: `c#c g c#` -> `12 - 1`)_
+- **Subtraction**: `g value1 value2`  
+  (Example: `g c#c c#` -> `12 - 1`)
 
-- **Multiplication**: `value1 f value2`  
-  _(Example: `c#c f c#` -> `12 _ 1`)\*
+- **Multiplication**: `f value1 value2`  
+  (Example: `f c#c c#` -> `12 * 1`)
 
-- **Division**: `value1 e value2`  
-  _(Example: `c#c e c#` -> `12 / 1`)_
+- **Division**: `e value1 value2`  
+  (Example: `e c#c c#` -> `12 / 1`)
 
 ## 🚀 Requirements
 
