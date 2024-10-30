@@ -6,6 +6,7 @@ use std::io::{BufRead, BufReader};
 mod processor;
 mod lexer;
 mod parser;
+mod validator;
 mod converter;
 mod evaluator;
 

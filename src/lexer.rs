@@ -1,4 +1,4 @@
-use crate::converter::{is_valid_operator, is_valid_datatype};
+use crate::validator::{is_valid_datatype, is_valid_operator};
 
 #[derive(Debug, PartialEq)]
 pub enum Token {

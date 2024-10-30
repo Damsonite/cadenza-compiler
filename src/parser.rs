@@ -1,5 +1,5 @@
 use crate::lexer::Token::{self, Value, Operator};
-use crate::converter::{is_valid_note, is_valid_operator};
+use crate::validator::{is_valid_datatype, is_valid_notes, is_valid_operator};
 
 #[derive(Debug, Clone)]
 pub enum Expr {
@@ -28,7 +28,7 @@ pub fn parse(tokens: Vec<Token>) -> Result<Expr, String> {
         };
 
         let data_type = match tokens.next() {
-            Some(Token::Type(t)) if is_valid_note(&t.to_string()) => t.to_string(),
+            Some(Token::Type(t)) if is_valid_datatype(&t.to_string()) => t.to_string(),
             Some(Token::Type(t)) => {
                 return Err(format!("Semantic error: '{}' is not a valid data type.", t));
             }
@@ -58,7 +58,7 @@ pub fn parse(tokens: Vec<Token>) -> Result<Expr, String> {
     for token in tokens.by_ref() {
         match token {
             Value(note) => {
-                if !is_valid_note(&note) {
+                if !is_valid_notes(&note) {
                     return Err(format!("Semantic error: Note '{}' is out of range.", note));
                 }
                 operands.push(note)

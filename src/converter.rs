@@ -1,23 +1,6 @@
 use crate::parser::Expr;
 
-const NOTES: [&str; 12] = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-const OPERATORS: [&str; 4] = ["A", "G", "F", "E"];
-const DATATYPES: [&str; 1] = ["E"];
-
-// Validate a note
-pub fn is_valid_note(note: &str) -> bool {
-    NOTES.iter().any(|&n| n == note)
-}
-
-// Validate an operator
-pub fn is_valid_operator(operator: &str) -> bool {
-    OPERATORS.iter().any(|&op| op == operator)
-}
-
-// Validate a datatype
-pub fn is_valid_datatype(datatype: &str) -> bool {
-    DATATYPES.iter().any(|&dt| dt == datatype)
-}
+pub const NOTES: [&str; 12] = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
 // Convert notes to a number
 pub fn note_to_number(note: &str) -> Result<u32, String> {
