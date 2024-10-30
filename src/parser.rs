@@ -1,5 +1,5 @@
 use crate::lexer::Token::{self, Value, Operator};
-use crate::evaluator::{is_valid_operator, is_valid_note};
+use crate::converter::{is_valid_note, is_valid_operator};
 
 #[derive(Debug, Clone)]
 pub enum Expr {
@@ -16,10 +16,11 @@ pub enum Expr {
 
 // Parse a list of tokens into an expression
 pub fn parse(tokens: Vec<Token>) -> Result<Expr, String> {
-    let mut tokens = tokens.into_iter();
+    let mut tokens = tokens.into_iter().peekable();
 
-/*     // Verify that the expression starts with a declaration
-    if let Some(Token::Declare) = tokens.next() {
+    // Verify that the expression starts with a declaration
+    if let Some(Token::Declare) = tokens.peek() {
+        tokens.next();
 
         let identifier = match tokens.next() {
             Some(Token::Identifier(id)) => id,
@@ -36,11 +37,10 @@ pub fn parse(tokens: Vec<Token>) -> Result<Expr, String> {
 
         let value = match tokens.next() {
             Some(Value(note)) => note,
-            _ => return Err("Syntax error: Expected a note as the value.".into()),
-        };
+            _ => return Err("Syntax error: Expected a note as the value.".into())};
 
         return Ok(Expr::Declaration { identifier, data_type, value });
-    }  */
+    }  
 
     // Verify that the expression starts with an operator
     let operator = match tokens.next() {

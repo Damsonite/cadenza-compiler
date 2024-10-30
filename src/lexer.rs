@@ -1,4 +1,4 @@
-use crate::evaluator::{is_valid_datatype, is_valid_operator};
+use crate::converter::{is_valid_operator, is_valid_datatype};
 
 #[derive(Debug, PartialEq)]
 pub enum Token {
@@ -8,6 +8,11 @@ pub enum Token {
     Type(char),
     Value(String),  
 }
+
+const DECLARATION_INDEX: usize = 0;
+const IDENTIFIER_INDEX: usize = 1;
+const DATATYPE_INDEX: usize = 2;
+const VALUE_INDEX: usize = 3;
 
 // Split the input string into tokens
 pub fn tokenize(input: &str) -> Result<Vec<Token>, String> {
@@ -27,18 +32,26 @@ pub fn tokenize(input: &str) -> Result<Vec<Token>, String> {
             continue;
         }
 
-        if tokens[0] == Token::Declare {
-            if i == 1 {
-                // Check if the second token is an identifier
-                tokens.push(Token::Identifier(token.to_string()));
-            } else if i == 2 && is_valid_datatype(token){
-                tokens.push(Token::Type(token.chars().next().unwrap()));
+        // Check if the first token is a declaration
+        if tokens[DECLARATION_INDEX] == Token::Declare {
+            match  i {
+                IDENTIFIER_INDEX => {
+                    // Check if the second token is an identifier
+                    tokens.push(Token::Identifier(token.to_string()));
+                }
+                DATATYPE_INDEX if is_valid_datatype(token) => {
+                    // Check if the third token is a data type
+                    tokens.push(Token::Type(token.chars().next().unwrap()));
+                }
+                VALUE_INDEX => {
+                    // Check if the third token is a value
+                    tokens.push(Token::Value(token.to_string()));
+                }
+                _ => {}
             }
-
-            continue;
+        } else {
+            tokens.push(Token::Value(token.to_string()));
         }
-
-        tokens.push(Token::Value(token.to_string()));
     }
     Ok(tokens)
 }

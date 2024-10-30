@@ -3,44 +3,17 @@ use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
+mod processor;
 mod lexer;
 mod parser;
+mod converter;
 mod evaluator;
-
-use crate::evaluator::{SymbolTable, evaluate, number_to_note};
-
-fn process_input(input: &str, symbol_table: &mut SymbolTable) {
-    match lexer::tokenize(&input) {
-        Ok(tokens) => {
-            match parser::parse(tokens) {
-                Ok(expr) => {
-                    match evaluator::expr_to_numbers(expr.clone()) {
-                        Ok(numbers) => {
-                            println!("Input: {}", input);
-                            println!("Expression: {}", numbers)},
-                        Err(e) => eprintln!("Conversion error: {}", e),
-                    };
-
-                    match evaluate(expr, symbol_table) {
-                        Ok(result) => {
-                            println!("Result: {}", result);
-                            println!("Output: {}\n", number_to_note(result).unwrap());
-                        },
-                        Err(e) => eprintln!("Evaluation error: {}", e),
-                    }
-                }
-                Err(e) => eprintln!("Parse error: {}", e),
-            }
-        }
-        Err(e) => eprintln!("Lexical error: {}", e),
-    }
-}
 
 fn main() {
     Command::new("clear").status().expect("Failed to clear console");
 
-    let mut symbol_table = evaluator::SymbolTable::new();
     let args: Vec<String> = env::args().collect();
+    let mut symbol_table = evaluator::SymbolTable::new();
 
     if args.len() > 1 { // FILE MODE
         let file_path = &args[1];
@@ -54,7 +27,7 @@ fn main() {
                 continue;
             }
 
-            process_input(&input, &mut symbol_table);
+            processor::process(&input, &mut symbol_table);
         }
     } else { // INTERACTIVE MODE
         loop {
@@ -72,7 +45,7 @@ fn main() {
                 continue;
             }
 
-            process_input(&input, &mut symbol_table);
+            processor::process(&input, &mut symbol_table);
         }
     }
 }
