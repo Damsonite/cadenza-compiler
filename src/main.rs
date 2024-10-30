@@ -7,7 +7,9 @@ mod lexer;
 mod parser;
 mod evaluator;
 
-fn process_input(input: &str) {
+use crate::evaluator::{SymbolTable, evaluate, number_to_note};
+
+fn process_input(input: &str, symbol_table: &mut SymbolTable) {
     match lexer::tokenize(&input) {
         Ok(tokens) => {
             match parser::parse(tokens) {
@@ -19,10 +21,10 @@ fn process_input(input: &str) {
                         Err(e) => eprintln!("Conversion error: {}", e),
                     };
 
-                    match evaluator::evaluate(expr) {
+                    match evaluate(expr, symbol_table) {
                         Ok(result) => {
                             println!("Result: {}", result);
-                            println!("Output: {}\n", evaluator::number_to_note(result).unwrap());
+                            println!("Output: {}\n", number_to_note(result).unwrap());
                         },
                         Err(e) => eprintln!("Evaluation error: {}", e),
                     }
@@ -37,6 +39,7 @@ fn process_input(input: &str) {
 fn main() {
     Command::new("clear").status().expect("Failed to clear console");
 
+    let mut symbol_table = evaluator::SymbolTable::new();
     let args: Vec<String> = env::args().collect();
 
     if args.len() > 1 { // FILE MODE
@@ -51,7 +54,7 @@ fn main() {
                 continue;
             }
 
-            process_input(&input);
+            process_input(&input, &mut symbol_table);
         }
     } else { // INTERACTIVE MODE
         loop {
@@ -69,7 +72,7 @@ fn main() {
                 continue;
             }
 
-            process_input(&input);
+            process_input(&input, &mut symbol_table);
         }
     }
 }
