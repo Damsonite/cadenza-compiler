@@ -6,6 +6,7 @@ This project is a **musical note compiler** that transforms arithmetic expressio
 
 - **Lexical, Syntactic, and Semantic Analysis**: Your musical input gets broken down and analyzed.
 - **Musical Notes**: Work with notes that convert into numbers in base 12.
+- **Variable Declaration**: Declare variables with musical identifiers.
 - **Arithmetic Operations**: Addition, subtraction, multiplication, and division are fully supported for natural numbers.
 
 ## 🎼 Musical Notes
@@ -19,6 +20,15 @@ We use the following notes in our system (in base 12):
 - **`c#`**: Note "C sharp" equivalent to 1
 - **`d`**: Note "C" equivalent to 2
 - **`c#c`**: That’s 12! 🎉
+
+## 📝 Variable Declaration
+
+To declare variables in the compiler, you can use the following syntax:
+
+- **Declaration & asignation**: `d variable_name data_type value`  
+  (Example: `d c b a` -> `c : int = 9`)
+
+> **Note**: The compiler currently supports only integers.
 
 ## ➕ Arithmetic Operations
 
